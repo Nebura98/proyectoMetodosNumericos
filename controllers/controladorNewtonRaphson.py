@@ -1,27 +1,30 @@
-import re
-import math
-
+from helpers.funcion import funcion
 from helpers.remplazarSimbolos import remplazarSimbolos
 
-def funcion(x, ecuacion):
-    return eval(re.sub('^x$',str(x),ecuacion))
+from models.newtonRaphson import NewtonRaphson
 
-def procesoNewtonRaphson(valores):
+def procesoNewtonRaphson(body : NewtonRaphson):
     indice = 0  
-    xn = valores.valorInicial
-    error = 100
+    xn     = body.valorInicial 
+    error  = 100
     
-    funcionNewtonRaphson = remplazarSimbolos(valores.funcionNewtonRaphson)
-    derivadaNewtonRaphson = remplazarSimbolos(valores.derivadaNewtonRaphson)
+    funcionNewtonRaphson  = remplazarSimbolos(body.funcionNewtonRaphson)
+    derivadaNewtonRaphson = remplazarSimbolos(body.derivadaNewtonRaphson)
 
     resultado = {}
 
-    while  error > valores.tolerancia:
+    while  error > body.tolerancia:
         try:
             indice = indice + 1
-            xi = round(xn-funcion(xn, funcionNewtonRaphson)/funcion(xn, derivadaNewtonRaphson), 4)
-            error = round(abs((xi-xn)/xi)*100, 4)
-            resultado[repr(indice)] = repr('x = ' + str(xi) + ', Punto medio = ' + str(funcion(xi)) + ', Error: ' + str(error) + '%')
+            xi = xn - funcion(xn, funcionNewtonRaphson) / funcion(xn, derivadaNewtonRaphson)
+            error = round(abs((xi-xn)/xi)*100,body.decimales)
+
+            resultado[repr(indice)] = {
+                'X' : str(round(xi,body.decimales)),
+                'Punto medio' : (round(funcion(xi,funcionNewtonRaphson),body.decimales)),
+                'Error':  str(error) + '%'
+            }
+
             xn = xi
         except OverflowError as err:
             print ('Overflowed on power ', xi, err)

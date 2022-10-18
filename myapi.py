@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 
-
-
 #Clases 
 from models.biseccion import Biseccion
 from models.newtonRaphson import NewtonRaphson
@@ -20,7 +18,7 @@ def Biseccion(body:Biseccion):
 
 @app.get('/newton-raphson')
 def newtonRaphson(body:NewtonRaphson):
-    resultado : object =  procesoNewtonRaphson(body)
+    resultado = procesoNewtonRaphson(body)
     return resultado
 
 @app.get('/punto-fijo')

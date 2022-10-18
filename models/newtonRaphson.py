@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 
 class NewtonRaphson(BaseModel):
-    funcionNewtonRaphson  : str
+    decimales             : int
     derivadaNewtonRaphson : str
+    funcionNewtonRaphson  : str
     tolerancia            : float
     valorInicial          : float
 
