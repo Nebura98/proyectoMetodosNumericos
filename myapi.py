@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from controllers.controladorBiseccion import procesoBiseccion
-from controllers.controladorPuntoFijo import procesoPuntoFijo
 
 # Clases
 from models.biseccion import Biseccion
@@ -11,6 +9,8 @@ from models.secante import Secante
 # Controladores
 from controllers.controladorNewtonRaphson import procesoNewtonRaphson
 from controllers.controladorSecante import procesoSecante
+from controllers.controladorBiseccion import procesoBiseccion
+from controllers.controladorPuntoFijo import procesoPuntoFijo
 
 app = FastAPI()
 
