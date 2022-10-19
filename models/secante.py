@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 class Secante(BaseModel):
+    decimales      : int
     ecuacion       : str
-    intervaloMenor : float    
     intervaloMayor : float
+    intervaloMenor : float    
     tolerancia     : float

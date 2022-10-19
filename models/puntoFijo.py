@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 class PuntoFijo(BaseModel):
+    decimales    : int
     ecuacion     : str
-    valorInicial : float
     tolerancia   : float
+    valorInicial : float

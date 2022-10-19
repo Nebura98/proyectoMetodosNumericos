@@ -1,25 +1,37 @@
-import math
-import re
-
 from helpers.remplazarSimbolos import remplazarSimbolos
+from helpers.funcion import funcion
 
-def funcion(x, ecuacion):
-    return eval(re.sub('^x$',str(x),ecuacion))
 
-def procesoSecante(body):
-    ecuacion, intervaloMenor, intervaloMayor, tolerancia = body
-    ecuacion =  remplazarSimbolos(ecuacion)
+from models.secante import Secante
+
+
+def procesoSecante(body:Secante):
+    ecuacion = remplazarSimbolos(body.ecuacion)
     indice = 1
     error = 100
-    while error > tolerancia:
-        if funcion(intervaloMenor, ecuacion) == funcion(intervaloMayor, ecuacion):
-            print('Divide by zero error!')
-            break
-        x2 = intervaloMenor - (intervaloMayor-intervaloMenor)*funcion(intervaloMenor, ecuacion)/( funcion(intervaloMayor,ecuacion) - funcion(intervaloMenor,ecuacion) ) 
-        print('Iteration-%d, x2 = %0.6f and funcion(x2) = %0.6f' % (indice, x2, funcion(x2)))
-        intervaloMenor = intervaloMayor
-        intervaloMayor = x2
-        indice = indice + 1
+    resultado = {}
 
-        condition = abs(funcion(x2)) > tolerancia
-        condition
+    intervaloMenor = body.intervaloMenor
+    intervaloMayor = body.intervaloMayor
+    decimales      = body.decimales
+    tolerancia     = body.tolerancia
+
+    while error > tolerancia:
+        # if funcion(intervaloMenor,ecuacion) == funcion(intervaloMayor,ecuacion) :
+        #     break
+
+        puntoMedio = intervaloMenor - (intervaloMayor - intervaloMenor) * funcion(intervaloMenor, ecuacion) / (funcion(intervaloMayor, ecuacion) - funcion(intervaloMenor, ecuacion))
+
+        error = round(abs((puntoMedio - intervaloMayor) / puntoMedio) * 100, body.decimales)
+
+        resultado[repr(indice)] = {
+            'intervaloMenor': round(intervaloMenor, decimales),
+            'intervaloMayor': round(intervaloMayor, decimales),
+            'puntoMedio': round(puntoMedio, decimales),
+            'error': str(error) + '%'
+        }
+
+        intervaloMenor = intervaloMayor
+        intervaloMayor = puntoMedio
+        indice += 1
+    return resultado

@@ -1,17 +1,26 @@
-import matplotlib
-import numpy as np
-from matplotlib import pyplot as plt 
+from helpers.funcion import funcion
+from helpers.remplazarSimbolos import remplazarSimbolos
 
-def fun(x):
-    g= np.cos(x)
-    return g
+from models.puntoFijo import PuntoFijo
 
-xi= 0
-error = 100
-while (error>0.001):
-    xn=fun(xi)
-    error = abs(xn-xi)/xn
-    xi=xn
-    print (round(xn,5),'             ', round (error,5) )
-  
- 
+def procesoPuntoFijo(body:PuntoFijo):
+
+    ecuacion = remplazarSimbolos(body.ecuacion)
+    
+    xi = body.valorInicial
+    
+    error = 100
+    indice = 1
+    
+    resultado = {}
+    
+    while (error > body.tolerancia):
+        xn = funcion(xi, ecuacion)
+        error = abs((xn - xi) / xn) * 100
+        xi = xn
+        resultado[repr(indice)] = {
+            'x': str(round(xn, body.decimales)),
+            'error': str(round(xn, body.decimales)) + '%'
+        }
+        indice += 1
+    return resultado
