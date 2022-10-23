@@ -41,7 +41,6 @@ def procesoBiseccion(body: Biseccion):
         resultado[repr(indice)] = {
             'intervaloMenor': round(intervaloMenor, decimales),
             'intervaloMayor': round(intervaloMayor, decimales),
-            'puntoMedio': round(puntoMedio, decimales),
             'raiz': round(puntoMedio, decimales),
             'error': str(round(error, decimales)) + '%'
         }

@@ -14,7 +14,6 @@ from controllers.controladorPuntoFijo import procesoPuntoFijo
 
 app = FastAPI()
 
-
 @app.get('/biseccion')
 def Biseccion(body: Biseccion):
     resultado = procesoBiseccion(body)
@@ -26,7 +25,7 @@ def newtonRaphson(body: NewtonRaphson):
     resultado = procesoNewtonRaphson(body)
     return resultado
 
-
+ 
 @app.get('/punto-fijo')
 def puntoFijo(body: PuntoFijo):
     resultado = procesoPuntoFijo(body)
