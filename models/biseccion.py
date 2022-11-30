@@ -4,5 +4,5 @@ class Biseccion(BaseModel):
     decimales      : int
     ecuacion       : str
     intervaloMayor : float
-    intervaloMenor : float    
+    intervaloMenor : float
     tolerancia     : float

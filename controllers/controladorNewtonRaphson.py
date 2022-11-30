@@ -7,6 +7,7 @@ from models.newtonRaphson import NewtonRaphson
 def procesoNewtonRaphson(body: NewtonRaphson):
     indice = 1
     xn = body.valorInicial
+    xiAnterior = 0
     error = 100
 
     funcionNewtonRaphson = remplazarSimbolos(body.funcionNewtonRaphson)
@@ -16,13 +17,19 @@ def procesoNewtonRaphson(body: NewtonRaphson):
 
     while error > body.tolerancia:
         try:
-            xi = xn - funcion(xn, funcionNewtonRaphson) / \
-                funcion(xn, derivadaNewtonRaphson)
-            error = round(abs((xi - xn) / xi) * 100, body.decimales)
 
+            f_a = funcion(xn, funcionNewtonRaphson) 
+            f_b= funcion(xn, derivadaNewtonRaphson)
+
+            xi = xn - (f_a / f_b)
+            
+            error = round(abs((xi - xiAnterior) / xi) * 100, body.decimales)
+
+            xiAnterior=xi
+            
             resultado[repr(indice)] = {
-                'x': str(round(xi, body.decimales)),
-                'puntoMedio': (round(funcion(xi, funcionNewtonRaphson), body.decimales)),
+                'x': str(round(xn, body.decimales)),
+                'puntoMedio': (round(f_a, body.decimales)),
                 'error': str(error) + '%'
             }
             xn = xi

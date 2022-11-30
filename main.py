@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Clases
 from models.biseccion import Biseccion
@@ -14,25 +15,35 @@ from controllers.controladorPuntoFijo import procesoPuntoFijo
 
 app = FastAPI()
 
-@app.get('/biseccion')
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post('/biseccion')
 def Biseccion(body: Biseccion):
     resultado = procesoBiseccion(body)
     return resultado
 
 
-@app.get('/newton-raphson')
+@app.post('/newton-raphson')
 def newtonRaphson(body: NewtonRaphson):
     resultado = procesoNewtonRaphson(body)
     return resultado
 
  
-@app.get('/punto-fijo')
+@app.post('/punto-fijo')
 def puntoFijo(body: PuntoFijo):
     resultado = procesoPuntoFijo(body)
     return resultado
 
 
-@app.get('/secante')
+@app.post('/secante')
 def secante(body: Secante):
     resultado = procesoSecante(body)
     return resultado

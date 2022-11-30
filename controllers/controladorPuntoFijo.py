@@ -20,7 +20,7 @@ def procesoPuntoFijo(body:PuntoFijo):
         xi = xn
         resultado[repr(indice)] = {
             'x': str(round(xn, body.decimales)),
-            'error': str(round(xn, body.decimales)) + '%'
+            'error': str(round(error, body.decimales)) + '%'
         }
         indice += 1
     return resultado

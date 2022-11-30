@@ -5,9 +5,9 @@ def remplazarSimbolos(text):
         'cos': 'math.cos',
         'sin': 'math.sin',
         'tan': 'math.tan',
-        '^': '**'}
+        '^': '**',
+        'log':'math.log',
+        'π':'math.pi'}
     for simbolo in trigonometria:
         text = text.replace(simbolo, trigonometria[simbolo])
-
-    print(text)
     return text

@@ -17,13 +17,14 @@ def procesoSecante(body:Secante):
     tolerancia     = body.tolerancia
 
     while error > tolerancia:
-        # if funcion(intervaloMenor,ecuacion) == funcion(intervaloMayor,ecuacion) :
-        #     break
 
-        puntoMedio = intervaloMenor - (intervaloMayor - intervaloMenor) * funcion(intervaloMenor, ecuacion) / (funcion(intervaloMayor, ecuacion) - funcion(intervaloMenor, ecuacion))
+        f_a = funcion(intervaloMenor, ecuacion)
+        f_b = funcion(intervaloMayor, ecuacion)
 
-        error = round(abs((puntoMedio - intervaloMayor) / puntoMedio) * 100, body.decimales)
-
+        puntoMedio =  intervaloMayor - f_b * (intervaloMayor - intervaloMenor) / (f_b - f_a )
+  
+        error = round(abs((puntoMedio - intervaloMenor) / puntoMedio) * 100, body.decimales)
+        
         resultado[repr(indice)] = {
             'intervaloMenor': round(intervaloMenor, decimales),
             'intervaloMayor': round(intervaloMayor, decimales),
@@ -31,7 +32,12 @@ def procesoSecante(body:Secante):
             'error': str(error) + '%'
         }
 
-        intervaloMenor = intervaloMayor
-        intervaloMayor = puntoMedio
+        if puntoMedio>intervaloMenor :
+            intervaloMenor = puntoMedio
+
+        if puntoMedio>intervaloMayor :
+            intervaloMayor= puntoMedio
+
         indice += 1
+
     return resultado
